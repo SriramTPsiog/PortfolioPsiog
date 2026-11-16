@@ -117,4 +117,30 @@ body {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to   { opacity: 1; transform: translateY(0); }
+}   
+.nav-toggle{
+    display:none;
+    background: none;
+    border: none;
+    color:var(--color-text-inverse);
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+  .nav-toggle { display: block; }
+
+  .nav-link {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: var(--color-primary-dark);
+  }
+
+  .nav-link.open { display: flex; }
+
+  .nav-link a {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
 }
