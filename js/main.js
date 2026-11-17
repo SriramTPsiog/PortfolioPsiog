@@ -1,14 +1,24 @@
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-link');
 
-navToggle.addEventListener('click', () => {
-  const isOpen = navMenu.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', isOpen);
+// "Show more" toggle
+document.querySelectorAll('.toggle-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const list = btn.previousElementSibling;
+    const isOpen = list.classList.toggle('open');
+    btn.textContent = isOpen ? 'Show less' : 'Show more';
+  });
 });
 
-navMenu.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    navMenu.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
+// Scroll-triggered reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
   });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.milestone').forEach((item) => {
+  item.classList.add('reveal');
+  observer.observe(item);
 });
