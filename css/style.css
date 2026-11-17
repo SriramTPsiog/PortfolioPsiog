@@ -312,6 +312,70 @@ body {
     right: auto;
   }
 }
+/* ---------- Interests card grid ---------- */
+#interests {
+  background: var(--color-bg);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.interest-card {
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+  background: var(--color-bg-card);
+  border: 3px solid var(--color-accent);
+  border-top: 8px solid var(--color-accent);
+  transition: border-top-color var(--transition-speed), background-color var(--transition-speed);
+}
+
+.interest-card:hover {
+  border-top-color: var(--color-accent);
+  background: var(--color-bg-secondary);
+}
+
+.card-num {
+  display: block;
+  margin-bottom: var(--spacing-md);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-speed);
+}
+
+.interest-card:hover .card-num {
+  color: var(--color-accent);
+}
+
+.interest-card h3 {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.interest-card p {
+  margin-bottom: var(--spacing-md);
+}
+
+.card-meta {
+  margin-bottom: 0;
+  padding-top: var(--spacing-sm);
+  border-top: 3px solid var(--color-accent);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 992px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
