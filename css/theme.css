@@ -23,7 +23,8 @@
     --color-border: #dee2e6; 
     --color-shadow: rgba(0, 0, 0, 0.1); 
     --color-overlay: rgba(26, 26, 46, 0.85);
- 
+    --color-gum: #ff8ec8;
+    --color-gum-dark: #e23c82;
 
     /* Typography */ 
     --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -47,3 +48,113 @@
     --border-radius: 8px; 
     --transition-speed: 0.3s; 
 } 
+
+/* ---------- Hero (scroll-driven) ---------- */
+#hero {
+  height: 250vh; /* the scroll distance that drives the animation: longer = slower */
+}
+
+.hero-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 82px 5% 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.hero-image { padding-left: 10%; }
+
+/* ---------- Dino + gum ---------- */
+.dino-stage {
+  position: relative;
+  width: 550px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  transform-origin: 50% 100%;
+  transform: translate(calc(var(--p, 0) * 6vw), calc(var(--bob, 0) * -1px)) rotate(calc(var(--tilt, 0) * 1deg));
+}
+
+.dino-stage.settle { transition: transform 0.25s ease-out; }
+
+.dino-base,
+.dino-splat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dino-bubble {
+  position: absolute;
+  left: 55.66%;
+  top: 24%;
+  width: 27.27%;
+  height: 27.27%;
+  transform-origin: 2.9% 53.8%; /* the lips */
+  transform: scale(var(--bubble, 0.04));
+  will-change: transform;
+}
+
+.dino-splat {
+  opacity: 0;
+  transform-origin: 60% 40%;
+}
+
+.gum-bit {
+  position: absolute;
+  left: 63%;
+  top: 38%;
+  width: 3%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-gum);
+  border: 2px solid var(--color-gum-dark);
+  opacity: 0;
+}
+
+.gum-bit:nth-of-type(1) { --dx: 900%;  --dy: -700%; }
+.gum-bit:nth-of-type(2) { --dx: 1300%; --dy: -100%; }
+.gum-bit:nth-of-type(3) { --dx: 1000%; --dy: 800%; }
+.gum-bit:nth-of-type(4) { --dx: 300%;  --dy: 1100%; }
+.gum-bit:nth-of-type(5) { --dx: -300%; --dy: -900%; }
+.gum-bit:nth-of-type(6) { --dx: -700%; --dy: -500%; }
+.gum-bit:nth-of-type(7) { --dx: -900%; --dy: 500%; }
+.gum-bit:nth-of-type(8) { --dx: 500%;  --dy: -1100%; }
+
+/* the pop (class toggled by JS) */
+.popped .dino-bubble { opacity: 0; }
+.popped .dino-splat { opacity: 1; animation: splat-in 0.35s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
+.popped .gum-bit { animation: gum-fling 0.7s ease-out forwards; }
+
+@keyframes splat-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes gum-fling {
+  from { opacity: 1; transform: translate(0, 0) scale(1); }
+  to   { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.4); }
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    justify-content: center;
+    padding: 82px 5% 0;
+    text-align: center;
+  }
+  .hero-image { padding-left: 0; }
+  .dino-stage { width: min(70vw, 320px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero { height: auto; }
+  .hero-container { position: static; height: auto; min-height: 100vh; }
+  .dino-bubble { transform: scale(0.8); }
+}
