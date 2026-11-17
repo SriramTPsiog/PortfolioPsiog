@@ -17,7 +17,7 @@ body {
 }
 /* ---------- Navbar ---------- */
 .navbar {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -27,9 +27,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 3%;
-  box-shadow: 0 8px 6px -6px var(--color-accent);
   background: var(--color-bg);
-  box-shadow: 2px 2px 8px var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
 }
 
 .nav-logo {
