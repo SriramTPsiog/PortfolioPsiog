@@ -1,4 +1,3 @@
-
 // "Show more" toggle
 document.querySelectorAll('.toggle-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -22,51 +21,55 @@ document.querySelectorAll('.milestone').forEach((item) => {
   item.classList.add('reveal');
   observer.observe(item);
 });
-// Hero: the dino walks and blows a bubble as you scroll
-const hero = document.getElementById('hero');
-const dino = document.getElementById('dinoStage');
-const BURST_AT = 0.9; // pops at 90% of the hero's scroll distance
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let settleTimer;
-let ticking = false;
 
-function updateDino() {
-  const travel = hero.offsetHeight - window.innerHeight;
-  if (travel <= 0) return;
+// Hero: the dino stands still while the gum inflates and bursts as you scroll
+(() => {
+  const hero = document.getElementById('hero');
+  const dino = document.getElementById('dinoStage');
+  if (!hero || !dino) return;
 
-  const p = Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / travel));
-  const grow = Math.min(p / BURST_AT, 1);
-  const eased = grow * grow * (3 - 2 * grow);
-  const phase = p * Math.PI * 16; // 8 steps over the whole scroll
-  const shake = grow > 0.8 ? Math.sin(phase * 6) * 0.02 * ((grow - 0.8) / 0.2) : 0;
+  const POP_AT = 0.9;     // the gum bursts at 90% of the hero's scroll distance
+  const POP_RESET = 0.86; // scrolling back up un-bursts a little earlier, so it never flickers
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let target = 0;
+  let shown = 0;
+  let running = false;
 
-  dino.classList.remove('settle');
-  dino.style.setProperty('--p', p);
-  dino.style.setProperty('--bubble', (0.04 + 0.96 * eased + shake).toFixed(3));
-  dino.style.setProperty('--bob', (Math.abs(Math.sin(phase)) * 12).toFixed(1));
-  dino.style.setProperty('--tilt', (Math.sin(phase) * 3).toFixed(1));
-  dino.classList.toggle('popped', p >= BURST_AT);
+  function progress() {
+    const travel = hero.offsetHeight - window.innerHeight;
+    if (travel <= 0) return 0;
+    return Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / travel));
+  }
 
-  // when scrolling stops, he stops mid-step and settles back to the ground
-  clearTimeout(settleTimer);
-  settleTimer = setTimeout(() => {
-    dino.classList.add('settle');
-    dino.style.setProperty('--bob', 0);
-    dino.style.setProperty('--tilt', 0);
-  }, 150);
-}
+  function draw(p) {
+    const grow = Math.min(p / POP_AT, 1);
+    const eased = grow * grow * (3 - 2 * grow);
+    dino.style.setProperty('--bubble', (0.04 + 0.96 * eased).toFixed(3));
+    if (p >= POP_AT) dino.classList.add('popped');
+    else if (p < POP_RESET) dino.classList.remove('popped');
+  }
 
-function onScroll() {
-  if (ticking) return;
-  ticking = true;
-  requestAnimationFrame(() => {
-    updateDino();
-    ticking = false;
-  });
-}
+  // glide toward the scroll position, so a mouse-wheel notch never makes the bubble jump
+  function tick() {
+    shown += (target - shown) * 0.15;
+    if (Math.abs(target - shown) < 0.0005) shown = target;
+    draw(shown);
+    if (shown !== target) requestAnimationFrame(tick);
+    else running = false;
+  }
 
-if (!reduceMotion) {
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  updateDino();
-}
+  function onScroll() {
+    target = progress();
+    if (!running) {
+      running = true;
+      requestAnimationFrame(tick);
+    }
+  }
+
+  if (!reduceMotion) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    target = shown = progress();
+    draw(shown);
+  }
+})();

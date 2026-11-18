@@ -314,7 +314,16 @@ body {
 }
 /* ---------- Interests card grid ---------- */
 #interests {
-  background: var(--color-bg);
+  background: var(--color-bg-secondary);
+}
+
+#interests .section-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin: var(--spacing-md) auto 0;
+  background: var(--color-accent);
 }
 
 .card-grid {
@@ -326,49 +335,111 @@ body {
 }
 
 .interest-card {
-  padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
   background: var(--color-bg-card);
-  border: 3px solid var(--color-accent);
-  border-top: 8px solid var(--color-accent);
-  transition: border-top-color var(--transition-speed), background-color var(--transition-speed);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+/* accent bar along the top that grows on hover */
+.interest-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--color-accent);
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform 0.4s ease;
 }
 
 .interest-card:hover {
-  border-top-color: var(--color-accent);
-  background: var(--color-bg-secondary);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 24px var(--color-shadow);
 }
 
+.interest-card:hover::before { transform: scaleX(1); }
+
+/* big faint number in the corner */
 .card-num {
-  display: block;
-  margin-bottom: var(--spacing-md);
-  font-size: 0.85rem;
-  letter-spacing: 0.1em;
-  color: var(--color-text-secondary);
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-lg);
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--color-border);
   transition: color var(--transition-speed);
 }
 
-.interest-card:hover .card-num {
+.interest-card:hover .card-num { color: var(--color-accent); }
+
+/* line icon in a square badge */
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  background: var(--color-bg-secondary);
   color: var(--color-accent);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.card-icon svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.interest-card:hover .card-icon {
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
 }
 
 .interest-card h3 {
   font-family: var(--font-primary);
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   margin-bottom: var(--spacing-sm);
 }
 
 .interest-card p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
   margin-bottom: var(--spacing-md);
 }
 
-.card-meta {
+/* the details line sits at the bottom of every card */
+.interest-card .card-meta {
+  margin-top: auto;
   margin-bottom: 0;
-  padding-top: var(--spacing-sm);
-  border-top: 3px solid var(--color-accent);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
   font-size: 0.9rem;
-  color: var(--color-text-secondary);
+  font-weight: 600;
+  color: var(--color-text);
 }
 
+@media (max-width: 992px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .card-grid { grid-template-columns: 1fr; }
+}
 @media (max-width: 992px) {
   .card-grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -385,4 +456,111 @@ body {
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(0); }
   to   { opacity: 1; transform: translateY(5px); }
+}
+/* ================= Hero: still dino, scroll-driven gum bubble =================
+   Paste at the very BOTTOM of style.css. It overrides the older #hero,
+   .hero-container and .hero-image rules above, so nothing needs deleting. */
+
+#hero {
+  display: block;
+  min-height: 0;
+  padding-top: 0;
+  height: 250vh; /* the scroll distance that drives the bubble: longer = slower */
+}
+
+.hero-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 0;
+  padding: 82px 5% 0 10%;
+  background: var(--color-bg);
+}
+
+.dino-stage {
+  position: relative;
+  width: 550px;
+  max-width: 100%;
+  aspect-ratio: 1;
+}
+
+.dino-base,
+.dino-splat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dino-bubble {
+  position: absolute;
+  left: 55.66%;
+  top: 24%;
+  width: 27.27%;
+  height: 27.27%;
+  transform-origin: 2.9% 53.8%; /* the lips */
+  transform: scale(var(--bubble, 0.04));
+  will-change: transform;
+}
+
+.dino-splat {
+  opacity: 0;
+  transform-origin: 60% 40%;
+}
+
+.gum-bit {
+  position: absolute;
+  left: 63%;
+  top: 38%;
+  width: 3%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-gum);
+  border: 2px solid var(--color-gum-dark);
+  opacity: 0;
+}
+
+.gum-bit:nth-of-type(1) { --dx: 900%;  --dy: -700%; }
+.gum-bit:nth-of-type(2) { --dx: 1300%; --dy: -100%; }
+.gum-bit:nth-of-type(3) { --dx: 1000%; --dy: 800%; }
+.gum-bit:nth-of-type(4) { --dx: 300%;  --dy: 1100%; }
+.gum-bit:nth-of-type(5) { --dx: -300%; --dy: -900%; }
+.gum-bit:nth-of-type(6) { --dx: -700%; --dy: -500%; }
+.gum-bit:nth-of-type(7) { --dx: -900%; --dy: 500%; }
+.gum-bit:nth-of-type(8) { --dx: 500%;  --dy: -1100%; }
+
+/* the burst: a quick swell, then the splat and flying bits (class toggled by JS) */
+.popped .dino-bubble {
+  opacity: 0;
+  transform: scale(1.2);
+  transition: opacity 0.08s, transform 0.08s;
+}
+.popped .dino-splat { opacity: 1; animation: splat-in 0.35s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
+.popped .gum-bit { animation: gum-fling 0.7s ease-out forwards; }
+
+@keyframes splat-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes gum-fling {
+  from { opacity: 1; transform: translate(0, 0) scale(1); }
+  to   { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.4); }
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    justify-content: center;
+    padding: 82px 5% 0;
+    text-align: center;
+  }
+  .hero-image { padding-left: 0; }
+  .dino-stage { width: min(70vw, 320px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #hero { height: auto; }
+  .hero-container { position: static; height: auto; min-height: 100vh; }
+  .dino-bubble { transform: scale(0.8); }
 }
