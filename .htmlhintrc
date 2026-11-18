@@ -6,5 +6,5 @@
     "tag-pair": true, 
     "id-unique": true, 
     "src-not-empty": true, 
-    "alt-require": false 
+    "alt-require": false     
 }
