@@ -1,50 +1,60 @@
+/* ============================================================
+   WARM TONES THEME
+   Cream paper, terracotta accent, soft amber highlights.
+   Suits a personal portfolio with a calm, inviting feel.
+   ============================================================ */
 :root {
+  color-scheme: light;
+
   /* ---------- Primary Colors ---------- */
-  --color-primary: #2c3e50;
-  --color-primary-light: #3498db;
-  --color-primary-dark: #1a252f;
+  --color-primary: #3d2c29;
+  --color-primary-light: #c4785a;
+  --color-primary-dark: #2a1f1c;
 
   /* ---------- Background Colors ---------- */
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f8f9fa;
-  --color-bg-card: #ffffff;
+  /* Warm cream / parchment */
+  --color-bg: #faf6f1;
+  --color-bg-secondary: #f3ebe3;
+  --color-bg-card: #fffdfb;
 
   /* ---------- Text Colors ---------- */
-  --color-text: #2c3e50;
-  --color-text-secondary: #6c757d;
-  --color-text-inverse: #ffffff;
+  --color-text: #3d2c29;
+  --color-text-secondary: #7a6560;
+  --color-text-inverse: #fffdfb;
 
   /* ---------- Accent & Borders ---------- */
-  --color-accent: #41006a;
-  --color-accent-sub: #6500a3;
-  --color-border: #dee2e6;
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-overlay: rgba(26, 26, 46, 0.85);
-  --color-gum: #ff8ec8;
-  --color-gum-dark: #e23c82;
+  /* Terracotta / burnt sienna */
+  --color-accent: #c45c3e;
+  --color-accent-sub: #a84830;
+  --color-border: #e8ddd4;
+  --color-shadow: rgba(61, 44, 41, 0.12);
+  --color-overlay: rgba(42, 31, 28, 0.82);
+  /* Soft coral-pink gum still readable on cream */
+  --color-gum: #f0a08a;
+  --color-gum-dark: #d4785c;
 
   /* ---------- Family section palette ---------- */
-  --color-family-accent: #5b1683;
-  --color-family-accent-deep: #4b0878;
-  --color-family-heading: #26394c;
-  --color-family-text: #293b4e;
-  --color-family-muted: #74808c;
-  --color-family-bg: #f4eff8;
-  --color-family-border: #e7dcec;
-  --color-family-border-soft: #eadff0;
-  --color-family-line: #ded1e8;
-  --color-family-photo-label-bg: rgba(35, 21, 46, 0.78);
-  --color-family-shadow: rgba(39, 19, 55, 0.08);
+  --color-family-accent: #b85a3e;
+  --color-family-accent-deep: #9a4630;
+  --color-family-heading: #3d2c29;
+  --color-family-text: #4a3834;
+  --color-family-muted: #8a736c;
+  --color-family-bg: #f7efe8;
+  --color-family-border: #e5d6cb;
+  --color-family-border-soft: #ebdcd1;
+  --color-family-line: #e0d0c4;
+  --color-family-photo-label-bg: rgba(42, 31, 28, 0.78);
+  --color-family-shadow: rgba(61, 44, 41, 0.1);
 
   /* ---------- Photography section palette ---------- */
-  --color-photo-accent: #8055d9;
-  --color-photo-heading: #001c35;
-  --color-photo-muted: #777d88;
-  --color-photo-footer: #9297a1;
-  --color-photo-caption: #c7adff;
-  --color-photo-bg: #f3f2f7;
-  --color-photo-overlay: rgba(0, 18, 38, 0.75);
-  --color-photo-lightbox-bg: rgba(0, 12, 27, 0.96);
+  --color-photo-accent: #c4785a;
+  --color-photo-heading: #2a1f1c;
+  --color-photo-muted: #8a736c;
+  --color-photo-footer: #9a847c;
+  --color-photo-caption: #e8b4a0;
+  --color-photo-bg: #f3ebe3;
+  --color-photo-overlay: rgba(42, 31, 28, 0.72);
+  --color-photo-lightbox-bg: rgba(30, 22, 20, 0.94);
 
   /* ---------- Typography ---------- */
   --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -54,15 +64,15 @@
   --font-size-h2: 2rem;
   --font-size-h3: 1.2rem;
   --font-size-heading: 4rem;
-  --font-size-xs: 0.625rem;   /* 10px */
-  --font-size-sm: 0.75rem;    /* 12px */
-  --font-size-md: 0.875rem;   /* 14px */
-  --font-size-lg: 1.0625rem;  /* 17px */
-  --font-size-xl: 1.1875rem;  /* 19px */
-  --font-size-2xl: 1.4375rem; /* 23px */
-  --font-size-3xl: 1.625rem;  /* 26px */
-  --font-size-display: clamp(2.125rem, 4vw, 3rem); /* family heading */
-  --font-size-display-lg: clamp(2.375rem, 5vw, 3.625rem); /* photo heading */
+  --font-size-xs: 0.625rem;
+  --font-size-sm: 0.75rem;
+  --font-size-md: 0.875rem;
+  --font-size-lg: 1.0625rem;
+  --font-size-xl: 1.1875rem;
+  --font-size-2xl: 1.4375rem;
+  --font-size-3xl: 1.625rem;
+  --font-size-display: clamp(2.125rem, 4vw, 3rem);
+  --font-size-display-lg: clamp(2.375rem, 5vw, 3.625rem);
 
   /* ---------- Spacing ---------- */
   --spacing-xs: 0.25rem;
@@ -70,8 +80,8 @@
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
   --spacing-xl: 4rem;
-  --spacing-2xl: 5.5rem; /* ~90px */
-  --spacing-3xl: 6.875rem; /* ~110px */
+  --spacing-2xl: 5.5rem;
+  --spacing-3xl: 6.875rem;
 
   /* ---------- Layout ---------- */
   --max-width: 1200px;
