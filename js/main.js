@@ -123,3 +123,108 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const galleryImages = Array.from(
+        document.querySelectorAll(".photo-item img")
+    );
+
+    const lightbox = document.getElementById("photoLightbox");
+    const lightboxImage = document.getElementById("lightboxImage");
+    const lightboxCounter = document.getElementById("lightboxCounter");
+
+    const closeButton = document.querySelector(".lightbox-close");
+    const prevButton = document.querySelector(".lightbox-prev");
+    const nextButton = document.querySelector(".lightbox-next");
+
+    let currentIndex = 0;
+    let previousFocus = null;
+
+    function updateLightbox() {
+        const image = galleryImages[currentIndex];
+
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+
+        lightboxCounter.textContent =
+            `${String(currentIndex + 1).padStart(2, "0")} / ${String(galleryImages.length).padStart(2, "0")}`;
+    }
+
+    function openLightbox(index) {
+        currentIndex = index;
+        previousFocus = document.activeElement;
+
+        updateLightbox();
+
+        lightbox.classList.add("active");
+        lightbox.setAttribute("aria-hidden", "false");
+
+        document.body.style.overflow = "hidden";
+        closeButton.focus();
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove("active");
+        lightbox.setAttribute("aria-hidden", "true");
+
+        document.body.style.overflow = "";
+
+        lightboxImage.src = "";
+
+        if (previousFocus) {
+            previousFocus.focus();
+        }
+    }
+
+    function showNext() {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        updateLightbox();
+    }
+
+    function showPrevious() {
+        currentIndex =
+            (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+
+        updateLightbox();
+    }
+
+    // Open clicked photograph
+    galleryImages.forEach((image, index) => {
+        image.closest(".photo-item").addEventListener("click", () => {
+            openLightbox(index);
+        });
+    });
+
+    // Navigation
+    nextButton.addEventListener("click", showNext);
+    prevButton.addEventListener("click", showPrevious);
+
+    // Close
+    closeButton.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    // Keyboard controls
+    document.addEventListener("keydown", (event) => {
+        if (!lightbox.classList.contains("active")) return;
+
+        if (event.key === "Escape") {
+            closeLightbox();
+        }
+
+        if (event.key === "ArrowRight") {
+            showNext();
+        }
+
+        if (event.key === "ArrowLeft") {
+            showPrevious();
+        }
+    });
+
+});

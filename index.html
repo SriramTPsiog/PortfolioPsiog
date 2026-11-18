@@ -20,7 +20,7 @@
             <li><a href="#journey">Journey</a></li>
             <li><a href="#interests">Interests</a></li>
             <li><a href="#family">Family</a></li>
-            <li><a href="#hobbies">Hobbies</a></li>
+            <li><a href="#photography">Captures</a></li>
         </ul>
         </div>
     </nav>
@@ -356,9 +356,113 @@
     </div>
 </section>
 
-  <section id="hobbies">
-    <h3>hi there</h3>
-  </section>
+
+<!-- PHOTOGRAPHY SECTION -->
+<section id="photography" class="photo-section">
+
+    <div class="photo-container">
+
+        <div class="photo-heading">
+            <span class="photo-eyebrow">A DIFFERENT PERSPECTIVE</span>
+            <h2>Through My <span>Lens.</span></h2>
+            <p>
+                Little moments, interesting places and perspectives
+                that deserve to be remembered.
+            </p>
+        </div>
+
+        <div class="photo-gallery">
+
+            <!-- Column 1 -->
+            <div class="photo-column">
+
+                <figure class="photo-item photo-tall">
+                    <img src="./images/photography/1.jpg"
+                         alt="Photography collection image"
+                         loading="lazy">
+                    <figcaption>01</figcaption>
+                </figure>
+
+                <figure class="photo-item photo-short">
+                    <img src="./images/photography/2.jpg"
+                         alt="Photography collection image"
+                         loading="lazy">
+                    <figcaption>02</figcaption>
+                </figure>
+
+            </div>
+
+            <!-- Column 2 -->
+            <div class="photo-column photo-column-offset">
+
+                <figure class="photo-item photo-short">
+                    <img src="./images/photography/3.jpg"
+                         alt="Photography collection image"
+                         loading="lazy">
+                    <figcaption>03</figcaption>
+                </figure>
+
+                <figure class="photo-item photo-tall">
+                    <img src="./images/photography/4.jpg"
+                         alt="Photography collection image"
+                         loading="lazy">
+                    <figcaption>04</figcaption>
+                </figure>
+
+            </div>
+
+            <!-- Column 3 -->
+            <div class="photo-column">
+
+                <figure class="photo-item photo-tall">
+                    <img src="./images/photography/5.jpg"
+                         alt="Photography collection image"
+                         loading="lazy">
+                    <figcaption>05</figcaption>
+                </figure>
+
+                <figure class="photo-item photo-short">
+                    <img src="./images/photography/6.jpg"
+                         alt="Photography collection image"
+                         loading="lazy">
+                    <figcaption>06</figcaption>
+                </figure>
+
+            </div>
+
+        </div>
+
+        <div class="photo-footer">
+            <span>MORE THAN JUST A PICTURE.</span>
+            <p>Every frame has a story.</p>
+        </div>
+
+    </div>
+
+    <!-- Image lightbox -->
+    <div class="photo-lightbox" id="photoLightbox"
+         role="dialog" aria-modal="true"
+         aria-label="Photograph viewer"
+         aria-hidden="true">
+
+        <button class="photo-close" type="button"
+                aria-label="Close image viewer">&times;</button>
+
+        <button class="photo-prev" type="button"
+                aria-label="Previous photograph">&#10094;</button>
+
+        <img src="" alt="Expanded photograph"
+             id="photoLightboxImage">
+
+        <button class="photo-next" type="button"
+                aria-label="Next photograph">&#10095;</button>
+
+        <span class="photo-counter" id="photoCounter"></span>
+
+    </div>
+
+</section>
+
   <footer id="footer">
     <p>Built with HTML,CSS and JS Versioned and Deployed via Github Actions</p>
   </footer>
