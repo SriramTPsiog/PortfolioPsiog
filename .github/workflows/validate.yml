@@ -1,6 +1,4 @@
 name: Validate HTML & CSS 
- 
-
 on: 
   push: 
     branches: [main, develop] 
