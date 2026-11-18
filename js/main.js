@@ -1,36 +1,59 @@
-// "Show more" toggle
+/* =========================================
+   JOURNEY — "Show more" toggle
+========================================= */
 document.querySelectorAll('.toggle-btn').forEach((btn) => {
   btn.addEventListener('click', () => {
     const list = btn.previousElementSibling;
+    if (!list || !list.classList.contains('milestone-desc')) return;
+
     const isOpen = list.classList.toggle('open');
     btn.textContent = isOpen ? 'Show less' : 'Show more';
+    btn.setAttribute('aria-expanded', String(isOpen));
   });
 });
 
-// Scroll-triggered reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
+/* =========================================
+   JOURNEY — Scroll-triggered reveal
+========================================= */
+(() => {
+  const milestones = document.querySelectorAll('.milestone');
+  if (!milestones.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    milestones.forEach((item) => item.classList.add('reveal', 'visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  milestones.forEach((item) => {
+    item.classList.add('reveal');
+    observer.observe(item);
   });
-}, { threshold: 0.15 });
+})();
 
-document.querySelectorAll('.milestone').forEach((item) => {
-  item.classList.add('reveal');
-  observer.observe(item);
-});
-
-// Hero: the dino stands still while the gum inflates and bursts as you scroll
+/* =========================================
+   HERO — Scroll-driven gum bubble
+========================================= */
 (() => {
   const hero = document.getElementById('hero');
   const dino = document.getElementById('dinoStage');
   if (!hero || !dino) return;
 
-  const POP_AT = 0.9;     // the gum bursts at 90% of the hero's scroll distance
-  const POP_RESET = 0.86; // scrolling back up un-bursts a little earlier, so it never flickers
+  const POP_AT = 0.9;
+  const POP_RESET = 0.86;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   let target = 0;
   let shown = 0;
   let running = false;
@@ -43,19 +66,25 @@ document.querySelectorAll('.milestone').forEach((item) => {
 
   function draw(p) {
     const grow = Math.min(p / POP_AT, 1);
-    const eased = grow * grow * (3 - 2 * grow);
+    const eased = grow * grow * (3 - 2 * grow); // smoothstep
     dino.style.setProperty('--bubble', (0.04 + 0.96 * eased).toFixed(3));
-    if (p >= POP_AT) dino.classList.add('popped');
-    else if (p < POP_RESET) dino.classList.remove('popped');
+
+    if (p >= POP_AT) {
+      dino.classList.add('popped');
+    } else if (p < POP_RESET) {
+      dino.classList.remove('popped');
+    }
   }
 
-  // glide toward the scroll position, so a mouse-wheel notch never makes the bubble jump
   function tick() {
     shown += (target - shown) * 0.15;
     if (Math.abs(target - shown) < 0.0005) shown = target;
     draw(shown);
-    if (shown !== target) requestAnimationFrame(tick);
-    else running = false;
+    if (shown !== target) {
+      requestAnimationFrame(tick);
+    } else {
+      running = false;
+    }
   }
 
   function onScroll() {
@@ -68,163 +97,187 @@ document.querySelectorAll('.milestone').forEach((item) => {
 
   if (!reduceMotion) {
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('resize', onScroll, { passive: true });
     target = shown = progress();
     draw(shown);
+  } else {
+    dino.style.setProperty('--bubble', '0.8');
   }
 })();
 
+/* =========================================
+   FAMILY — Scroll reveal
+========================================= */
+(() => {
+  const familyElements = document.querySelectorAll('#family .family-reveal');
+  if (!familyElements.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    familyElements.forEach((el) => el.classList.add('family-visible'));
+    return;
+  }
+
+  const familyObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('family-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px',
+    }
+  );
+
+  familyElements.forEach((el) => familyObserver.observe(el));
+})();
 
 /* =========================================
-   FAMILY SECTION INTERACTIONS
+   PHOTOGRAPHY — Lightbox
 ========================================= */
+(() => {
+  const galleryImages = Array.from(document.querySelectorAll('.photo-item img'));
+  const lightbox = document.getElementById('photoLightbox');
+  const lightboxImage = document.getElementById('photoLightboxImage');
+  const lightboxCounter = document.getElementById('photoCounter');
+  const closeButton = document.querySelector('.photo-close');
+  const prevButton = document.querySelector('.photo-prev');
+  const nextButton = document.querySelector('.photo-next');
 
-document.addEventListener("DOMContentLoaded", () => {
+  if (
+    !galleryImages.length ||
+    !lightbox ||
+    !lightboxImage ||
+    !lightboxCounter ||
+    !closeButton ||
+    !prevButton ||
+    !nextButton
+  ) {
+    return;
+  }
 
-    const familyElements = document.querySelectorAll(
-        "#family .family-reveal"
-    );
+  let currentIndex = 0;
+  let previousFocus = null;
 
-    // Reveal elements when they enter the viewport
-    if ("IntersectionObserver" in window) {
+  function updateLightbox() {
+    const image = galleryImages[currentIndex];
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = image.alt || 'Expanded photograph';
+    lightboxCounter.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
+  }
 
-        const familyObserver = new IntersectionObserver(
-            (entries, observer) => {
+  function openLightbox(index) {
+    currentIndex = index;
+    previousFocus = document.activeElement;
+    updateLightbox();
+    lightbox.classList.add('active');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeButton.focus();
+  }
 
-                entries.forEach((entry) => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add("family-visible");
-
-                        observer.unobserve(entry.target);
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12,
-                rootMargin: "0px 0px -40px 0px"
-            }
-        );
-
-        familyElements.forEach((element) => {
-            familyObserver.observe(element);
-        });
-
-    } else {
-
-        // Fallback for older browsers
-        familyElements.forEach((element) => {
-            element.classList.add("family-visible");
-        });
-
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    lightboxImage.removeAttribute('src');
+    if (previousFocus && typeof previousFocus.focus === 'function') {
+      previousFocus.focus();
     }
+  }
 
-});
+  function showNext() {
+    currentIndex = (currentIndex + 1) % galleryImages.length;
+    updateLightbox();
+  }
 
+  function showPrevious() {
+    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    updateLightbox();
+  }
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const galleryImages = Array.from(
-        document.querySelectorAll(".photo-item img")
-    );
-
-    const lightbox = document.getElementById("photoLightbox");
-    const lightboxImage = document.getElementById("lightboxImage");
-    const lightboxCounter = document.getElementById("lightboxCounter");
-
-    const closeButton = document.querySelector(".lightbox-close");
-    const prevButton = document.querySelector(".lightbox-prev");
-    const nextButton = document.querySelector(".lightbox-next");
-
-    let currentIndex = 0;
-    let previousFocus = null;
-
-    function updateLightbox() {
-        const image = galleryImages[currentIndex];
-
-        lightboxImage.src = image.src;
-        lightboxImage.alt = image.alt;
-
-        lightboxCounter.textContent =
-            `${String(currentIndex + 1).padStart(2, "0")} / ${String(galleryImages.length).padStart(2, "0")}`;
-    }
-
-    function openLightbox(index) {
-        currentIndex = index;
-        previousFocus = document.activeElement;
-
-        updateLightbox();
-
-        lightbox.classList.add("active");
-        lightbox.setAttribute("aria-hidden", "false");
-
-        document.body.style.overflow = "hidden";
-        closeButton.focus();
-    }
-
-    function closeLightbox() {
-        lightbox.classList.remove("active");
-        lightbox.setAttribute("aria-hidden", "true");
-
-        document.body.style.overflow = "";
-
-        lightboxImage.src = "";
-
-        if (previousFocus) {
-            previousFocus.focus();
-        }
-    }
-
-    function showNext() {
-        currentIndex = (currentIndex + 1) % galleryImages.length;
-        updateLightbox();
-    }
-
-    function showPrevious() {
-        currentIndex =
-            (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-
-        updateLightbox();
-    }
-
-    // Open clicked photograph
-    galleryImages.forEach((image, index) => {
-        image.closest(".photo-item").addEventListener("click", () => {
-            openLightbox(index);
-        });
+  galleryImages.forEach((image, index) => {
+    const item = image.closest('.photo-item');
+    if (!item) return;
+    item.addEventListener('click', () => openLightbox(index));
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('role', 'button');
+    item.setAttribute('aria-label', `View photograph ${index + 1}`);
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openLightbox(index);
+      }
     });
+  });
 
-    // Navigation
-    nextButton.addEventListener("click", showNext);
-    prevButton.addEventListener("click", showPrevious);
+  nextButton.addEventListener('click', showNext);
+  prevButton.addEventListener('click', showPrevious);
+  closeButton.addEventListener('click', closeLightbox);
 
-    // Close
-    closeButton.addEventListener("click", closeLightbox);
+  lightbox.addEventListener('click', (event) => {
+    if (event.target === lightbox) closeLightbox();
+  });
 
-    lightbox.addEventListener("click", (event) => {
-        if (event.target === lightbox) {
-            closeLightbox();
+  document.addEventListener('keydown', (event) => {
+    if (!lightbox.classList.contains('active')) return;
+
+    switch (event.key) {
+      case 'Escape':
+        closeLightbox();
+        break;
+      case 'ArrowRight':
+        showNext();
+        break;
+      case 'ArrowLeft':
+        showPrevious();
+        break;
+      default:
+        break;
+    }
+  });
+})();
+
+/* =========================================
+   NAV — Active link highlighting
+========================================= */
+(() => {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link a');
+  if (!sections.length || !navLinks.length) return;
+
+  const linkMap = new Map();
+  navLinks.forEach((link) => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkMap.set(href.slice(1), link);
+    }
+  });
+
+  function setActive(id) {
+    navLinks.forEach((link) => link.classList.remove('active'));
+    const active = linkMap.get(id);
+    if (active) active.classList.add('active');
+  }
+
+  if (!('IntersectionObserver' in window)) return;
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
         }
-    });
+      });
+    },
+    {
+      rootMargin: '-40% 0px -50% 0px',
+      threshold: 0,
+    }
+  );
 
-    // Keyboard controls
-    document.addEventListener("keydown", (event) => {
-        if (!lightbox.classList.contains("active")) return;
-
-        if (event.key === "Escape") {
-            closeLightbox();
-        }
-
-        if (event.key === "ArrowRight") {
-            showNext();
-        }
-
-        if (event.key === "ArrowLeft") {
-            showPrevious();
-        }
-    });
-
-});
+  sections.forEach((section) => sectionObserver.observe(section));
+})();
