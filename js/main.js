@@ -73,3 +73,53 @@ document.querySelectorAll('.milestone').forEach((item) => {
     draw(shown);
   }
 })();
+
+
+/* =========================================
+   FAMILY SECTION INTERACTIONS
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const familyElements = document.querySelectorAll(
+        "#family .family-reveal"
+    );
+
+    // Reveal elements when they enter the viewport
+    if ("IntersectionObserver" in window) {
+
+        const familyObserver = new IntersectionObserver(
+            (entries, observer) => {
+
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("family-visible");
+
+                        observer.unobserve(entry.target);
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -40px 0px"
+            }
+        );
+
+        familyElements.forEach((element) => {
+            familyObserver.observe(element);
+        });
+
+    } else {
+
+        // Fallback for older browsers
+        familyElements.forEach((element) => {
+            element.classList.add("family-visible");
+        });
+
+    }
+
+});

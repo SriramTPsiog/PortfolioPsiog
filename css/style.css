@@ -564,3 +564,362 @@ body {
   .hero-container { position: static; height: auto; min-height: 100vh; }
   .dino-bubble { transform: scale(0.8); }
 }
+
+
+/* =========================================
+   FAMILY SECTION
+========================================= */
+
+.family-section {
+    position: relative;
+    padding: 110px 7% 90px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.family-container {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+/* Heading */
+
+.family-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.family-eyebrow {
+    display: inline-block;
+    color: #5b1683;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.family-heading h2 {
+    color: #26394c;
+    font-size: clamp(34px, 4vw, 48px);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.family-heading h2 span {
+    color: #4b0878;
+    font-weight: 800;
+}
+
+.family-heading p {
+    color: #74808c;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+/* Intro divider */
+
+.family-intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 650px;
+    margin: 0 auto 65px;
+}
+
+.family-intro p {
+    color: #4b0878;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.family-intro p span {
+    font-weight: 700;
+}
+
+.family-intro-line {
+    height: 1px;
+    flex: 1;
+    background: #ded1e8;
+}
+
+/* Character grid */
+
+.family-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 45px;
+    row-gap: 65px;
+}
+
+/* Individual scrapbook card */
+
+.family-card {
+    position: relative;
+    min-width: 0;
+    background: transparent;
+    transition: transform 0.3s ease;
+}
+
+.family-card:nth-child(3n + 1) {
+    transform: rotate(-1deg);
+}
+
+.family-card:nth-child(3n + 2) {
+    transform: rotate(1deg);
+}
+
+.family-card:nth-child(3n) {
+    transform: rotate(-0.5deg);
+}
+
+.family-card:hover {
+    transform: translateY(-9px) rotate(0deg);
+    z-index: 2;
+}
+
+/* Photo frame */
+
+.family-photo-wrap {
+    position: relative;
+    height: 275px;
+    padding: 12px;
+    background: #f4eff8;
+    border: 1px solid #e7dcec;
+    border-radius: 5px;
+    box-shadow: 0 5px 14px rgba(39, 19, 55, 0.08);
+    overflow: hidden;
+}
+
+.family-photo-wrap::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65px;
+    height: 4px;
+    background: #4b0878;
+    z-index: 2;
+}
+
+.family-photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 25%;
+    border-radius: 2px;
+    transition: transform 0.5s ease;
+}
+
+.family-card:hover .family-photo {
+    transform: scale(1.045);
+}
+
+/* Photo number */
+
+.family-number {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    z-index: 2;
+    color: #ffffff;
+    font-family: Georgia, serif;
+    font-size: 19px;
+    font-weight: bold;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Photo label */
+
+.family-photo-label {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 2;
+    padding: 6px 11px;
+    background: rgba(35, 21, 46, 0.78);
+    color: #ffffff;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+/* Character information */
+
+.family-card-content {
+    padding: 17px 5px 0;
+}
+
+.family-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.family-name-row h3 {
+    color: #293b4e;
+    font-size: 23px;
+    font-weight: 750;
+}
+
+.family-symbol {
+    color: #5b1683;
+    font-size: 24px;
+}
+
+.family-card-content > p {
+    color: #74808c;
+    font-size: 14px;
+    line-height: 1.75;
+    min-height: 74px;
+}
+
+/* Personality tags */
+
+.family-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 13px;
+}
+
+.family-tags span {
+    padding: 5px 10px;
+    background: #f4eff8;
+    color: #4b0878;
+    border: 1px solid #eadff0;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.family-card:hover .family-tags span {
+    background: #4b0878;
+    border-color: #4b0878;
+    color: #ffffff;
+}
+
+/* Closing note */
+
+.family-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 90px;
+    text-align: center;
+}
+
+.family-footer-star {
+    color: #5b1683;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.family-footer p {
+    color: #293b4e;
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-style: italic;
+}
+
+.family-footer-caption {
+    margin-top: 12px;
+    color: #5b1683;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+/* Scroll reveal */
+
+.family-reveal {
+    opacity: 0;
+    transform: translateY(25px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+.family-reveal.family-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive layout */
+
+@media (max-width: 1000px) {
+    .family-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 30px;
+        row-gap: 50px;
+    }
+
+    .family-photo-wrap {
+        height: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    .family-section {
+        padding: 80px 6% 65px;
+    }
+
+    .family-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+        max-width: 390px;
+        margin: 0 auto;
+    }
+
+    .family-photo-wrap {
+        height: 330px;
+    }
+
+    .family-card:nth-child(n) {
+        transform: none;
+    }
+
+    .family-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .family-intro {
+        gap: 10px;
+        margin-bottom: 45px;
+    }
+
+    .family-intro p {
+        font-size: 13px;
+    }
+
+    .family-card-content > p {
+        min-height: auto;
+    }
+
+    .family-footer {
+        margin-top: 65px;
+    }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+    .family-section *,
+    .family-section *::before,
+    .family-section *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .family-reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
