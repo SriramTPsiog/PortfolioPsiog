@@ -1,50 +1,60 @@
+/* ============================================================
+   DARK THEME (branch default)
+   Deep violet-night palette — suits the purple accent,
+   Mikaelson family section, and photography mood.
+   ============================================================ */
 :root {
+  color-scheme: dark;
+
   /* ---------- Primary Colors ---------- */
-  --color-primary: #2c3e50;
-  --color-primary-light: #3498db;
-  --color-primary-dark: #1a252f;
+  --color-primary: #c4b5e0;
+  --color-primary-light: #a78bfa;
+  --color-primary-dark: #0a0612;
 
   /* ---------- Background Colors ---------- */
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f8f9fa;
-  --color-bg-card: #ffffff;
+  /* Near-black with a cool purple undertone */
+  --color-bg: #0c0a10;
+  --color-bg-secondary: #14111c;
+  --color-bg-card: #1a1524;
 
   /* ---------- Text Colors ---------- */
-  --color-text: #2c3e50;
-  --color-text-secondary: #6c757d;
-  --color-text-inverse: #ffffff;
+  --color-text: #e8e4f0;
+  --color-text-secondary: #9b93a8;
+  --color-text-inverse: #0c0a10;
 
   /* ---------- Accent & Borders ---------- */
-  --color-accent: #41006a;
-  --color-accent-sub: #6500a3;
-  --color-border: #dee2e6;
-  --color-shadow: rgba(0, 0, 0, 0.1);
-  --color-overlay: rgba(26, 26, 46, 0.85);
+  /* Lifted purple so it glows on dark surfaces */
+  --color-accent: #b06bff;
+  --color-accent-sub: #9a4dff;
+  --color-border: #2e2740;
+  --color-shadow: rgba(0, 0, 0, 0.45);
+  --color-overlay: rgba(8, 5, 14, 0.88);
+  /* Gum stays saturated — reads well on dark */
   --color-gum: #ff8ec8;
   --color-gum-dark: #e23c82;
 
   /* ---------- Family section palette ---------- */
-  --color-family-accent: #5b1683;
-  --color-family-accent-deep: #4b0878;
-  --color-family-heading: #26394c;
-  --color-family-text: #293b4e;
-  --color-family-muted: #74808c;
-  --color-family-bg: #f4eff8;
-  --color-family-border: #e7dcec;
-  --color-family-border-soft: #eadff0;
-  --color-family-line: #ded1e8;
-  --color-family-photo-label-bg: rgba(35, 21, 46, 0.78);
-  --color-family-shadow: rgba(39, 19, 55, 0.08);
+  --color-family-accent: #c084fc;
+  --color-family-accent-deep: #a855f7;
+  --color-family-heading: #e8e4f0;
+  --color-family-text: #ddd6eb;
+  --color-family-muted: #9b93a8;
+  --color-family-bg: #1e1830;
+  --color-family-border: #3b2f55;
+  --color-family-border-soft: #4a3a66;
+  --color-family-line: #3b2f55;
+  --color-family-photo-label-bg: rgba(12, 8, 22, 0.82);
+  --color-family-shadow: rgba(0, 0, 0, 0.4);
 
   /* ---------- Photography section palette ---------- */
-  --color-photo-accent: #8055d9;
-  --color-photo-heading: #001c35;
-  --color-photo-muted: #777d88;
-  --color-photo-footer: #9297a1;
-  --color-photo-caption: #c7adff;
-  --color-photo-bg: #f3f2f7;
-  --color-photo-overlay: rgba(0, 18, 38, 0.75);
-  --color-photo-lightbox-bg: rgba(0, 12, 27, 0.96);
+  --color-photo-accent: #a78bfa;
+  --color-photo-heading: #f0ebff;
+  --color-photo-muted: #9b93a8;
+  --color-photo-footer: #7a738c;
+  --color-photo-caption: #d4c4ff;
+  --color-photo-bg: #1a1524;
+  --color-photo-overlay: rgba(8, 5, 18, 0.8);
+  --color-photo-lightbox-bg: rgba(4, 2, 10, 0.96);
 
   /* ---------- Typography ---------- */
   --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -54,15 +64,15 @@
   --font-size-h2: 2rem;
   --font-size-h3: 1.2rem;
   --font-size-heading: 4rem;
-  --font-size-xs: 0.625rem;   /* 10px */
-  --font-size-sm: 0.75rem;    /* 12px */
-  --font-size-md: 0.875rem;   /* 14px */
-  --font-size-lg: 1.0625rem;  /* 17px */
-  --font-size-xl: 1.1875rem;  /* 19px */
-  --font-size-2xl: 1.4375rem; /* 23px */
-  --font-size-3xl: 1.625rem;  /* 26px */
-  --font-size-display: clamp(2.125rem, 4vw, 3rem); /* family heading */
-  --font-size-display-lg: clamp(2.375rem, 5vw, 3.625rem); /* photo heading */
+  --font-size-xs: 0.625rem;
+  --font-size-sm: 0.75rem;
+  --font-size-md: 0.875rem;
+  --font-size-lg: 1.0625rem;
+  --font-size-xl: 1.1875rem;
+  --font-size-2xl: 1.4375rem;
+  --font-size-3xl: 1.625rem;
+  --font-size-display: clamp(2.125rem, 4vw, 3rem);
+  --font-size-display-lg: clamp(2.375rem, 5vw, 3.625rem);
 
   /* ---------- Spacing ---------- */
   --spacing-xs: 0.25rem;
@@ -70,8 +80,8 @@
   --spacing-md: 1rem;
   --spacing-lg: 2rem;
   --spacing-xl: 4rem;
-  --spacing-2xl: 5.5rem; /* ~90px */
-  --spacing-3xl: 6.875rem; /* ~110px */
+  --spacing-2xl: 5.5rem;
+  --spacing-3xl: 6.875rem;
 
   /* ---------- Layout ---------- */
   --max-width: 1200px;
