@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": [
+      true,
+      { "ignore": ["consecutive-duplicates-with-different-values"] }
+    ],
+    "property-no-unknown": true,
+    "unit-no-unknown": true,
+    "function-no-unknown": true,
+    "selector-pseudo-class-no-unknown": true,
+    "selector-pseudo-element-no-unknown": true,
+    "no-duplicate-at-import-rules": true,
+    "string-no-newline": true
+  }
+}
