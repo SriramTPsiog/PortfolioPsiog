@@ -281,3 +281,21 @@ document.querySelectorAll('.toggle-btn').forEach((btn) => {
 
   sections.forEach((section) => sectionObserver.observe(section));
 })();
+
+/* =========================================
+   THEME SWITCHER
+========================================= */
+(() => {
+  const select = document.getElementById('theme-select');
+  if (!select) return;
+
+  const root = document.documentElement;
+  const saved = localStorage.getItem('theme') || 'warm';
+  root.setAttribute('data-theme', saved);
+  select.value = saved;
+
+  select.addEventListener('change', () => {
+    root.setAttribute('data-theme', select.value);
+    localStorage.setItem('theme', select.value);
+  });
+})();

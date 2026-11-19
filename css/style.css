@@ -1272,3 +1272,43 @@ body {
     right: 0;
   }
 }
+
+/* ---------- Theme switcher ---------- */
+.nav-link li {
+  display: flex;
+  align-items: center;
+}
+
+#theme-select {
+  margin-left: var(--spacing-sm);
+  padding: 6px 28px 6px 12px;
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background-color: var(--color-bg-card);
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-accent) 50%), linear-gradient(135deg, var(--color-accent) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 55%, calc(100% - 10px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  cursor: pointer;
+  appearance: none;
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+#theme-select:hover {
+  border-color: var(--color-accent);
+}
+
+#theme-select:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-shadow);
+}
+
+#theme-select option {
+  color: var(--color-text);
+  background: var(--color-bg-card);
+}
